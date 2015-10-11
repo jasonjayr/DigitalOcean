@@ -13,6 +13,8 @@ use DigitalOcean::Domain;
 use DigitalOcean::Droplet::Upgrade;
 use DigitalOcean::SSH::Key;
 
+use Log::Any qw($log);
+
 #for requesting
 use LWP::UserAgent;
 use LWP::Protocol::https;
@@ -264,7 +266,7 @@ sub _request {
     }
 
     $uri->query_form($params);
-    print "REQUESTING " . $uri->as_string . "\n";
+    $log->debug("Digital Ocean request URL: ".$uri->as_string);
 
     my $req = HTTP::Request->new(
         $req_method,
@@ -288,8 +290,7 @@ sub _request {
         my $json_coder = JSON::XS->new->ascii->allow_nonref;
         my $req_body = $json_coder->encode($req_body_hash);
         $req->content($req_body);
-
-        print "REQ BODY $req_body\n";
+	$log->debug("Sending request to Digital Ocean: $req_body");
     }
 
     my $response = $self->ua->request($req);
@@ -298,9 +299,11 @@ sub _request {
         $json = JSON::XS->new->utf8->decode($response->content);
 
         #TEMPORARY
-        my $coder = JSON::XS->new->ascii->pretty->allow_nonref;
-        my $pretty_printed_unencoded = $coder->encode ($json);
-        print "$pretty_printed_unencoded\n";
+	if($log->is_debug) { 
+		my $coder = JSON::XS->new->ascii->pretty->allow_nonref;
+		my $pretty_printed_unencoded = $coder->encode ($json);
+		$log->debug("Response from Digital Ocean: $pretty_printed_unencoded");
+	}
 
         #die with DigitalOcean::Error
         if($response->code < 200 or $response->code >= 300) {
@@ -334,7 +337,7 @@ sub _request {
 
             #if actions array is present and we are supposed to wait on events, then wait!
             if($json->{links}->{actions} and ($self->wait_on_actions or $wait_on_action)) { 
-                print "WAITING on ACTION in request\n";
+		$log->debug("WAITING on Digital Ocean ACTION in request");
 
                 #wait on each returned action that occurred from the API call
                 for my $act_temp (@{$json->{links}->{actions}}) { 
