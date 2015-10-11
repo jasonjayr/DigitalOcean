@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::NextBackupWindow;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Network object in the DigitalOcean API

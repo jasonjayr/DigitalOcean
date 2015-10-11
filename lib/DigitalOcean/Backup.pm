@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Backup;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Backup object in the DigitalOcean API

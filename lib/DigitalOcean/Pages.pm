@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Pages;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Links object in the DigitalOcean API

@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Droplet::Upgrade;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a droplet upgrade object in the DigitalOcean API

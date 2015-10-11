@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Networks;
+
+use strict;
 use Mouse;
 use DigitalOcean::Type::Network;
 

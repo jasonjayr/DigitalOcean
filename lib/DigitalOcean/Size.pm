@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Size;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Size object in the DigitalOcean API

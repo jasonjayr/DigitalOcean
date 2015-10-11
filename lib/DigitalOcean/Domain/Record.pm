@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Domain::Record;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Domain object in the DigitalOcean API

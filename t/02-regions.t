@@ -10,13 +10,15 @@ use Data::Dump qw(ddx);
 my %slug_test = (
 	# NOTE: Digital ocean is free to change these properties on a whim.  In theory they should stay the same 
 	# all the time.
-	'2gb' => { 
-		memory => '2048',
-		vcpus  => 2
+	'nyc1' => { 
+		feature => 'backups',
+		size    => '2gb',
+		avilable => 1,
 	},
-	'4gb' => { 
-		memory => '4096',
-		vcpus  => 2
+	'nyc2' => { 
+		feature => 'private_networking',
+		size    => '4gb',
+		avilable => 1,
 	},
 );
 
@@ -27,14 +29,14 @@ my $tokens = DOTestSetup->tokens();
 my $do = DigitalOcean->new(oauth_token => $tokens->{read_only});
 
 DOTestSetup->collection_harness(
-	$do, 'sizes', 
+	$do, 'regions', 
 	\%slug_test,	
 	sub {
 		my ($slug, $item, $target) =  @_;
 
-		ok($item->price_hourly > 0,                "$slug: Price is non-zero");
-		is($item->vcpus, $target->{vcpus},         "$slug: CPU count matches expected value");
-		is($item->memory, $target->{memory},       "$slug: Memory count matches expected value");
+		ok(scalar(grep { $_ eq $target->{feature} } @{$item->features}), "$slug: feature $target->{feature} avilable");
+		ok(scalar(grep { $_ eq $target->{size}    } @{$item->sizes}),    "$slug: size $target->{size} avilable");
+		is($item->available, $target->{avilable},                        "$slug: availability matches expected value");
 	}
 )
 

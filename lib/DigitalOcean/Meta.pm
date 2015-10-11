@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Meta;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Meta object in the DigitalOcean API

@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Snapshot;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Snapshot object in the DigitalOcean API

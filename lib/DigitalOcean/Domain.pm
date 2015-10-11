@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Domain;
+
+use strict;
 use Mouse;
 use DigitalOcean::Domain::Record;
 

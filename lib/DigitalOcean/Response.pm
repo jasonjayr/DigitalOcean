@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Response;
+
+use strict;
 use Mouse;
 
 has json => ( 

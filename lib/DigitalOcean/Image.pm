@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Image;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Region object in the DigitalOcean API

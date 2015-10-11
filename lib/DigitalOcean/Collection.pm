@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Collection;
+
+use strict;
 use Mouse;
 use DigitalOcean::Types;
 

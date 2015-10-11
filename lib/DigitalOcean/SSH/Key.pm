@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::SSH::Key;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a SSH Key object in the DigitalOcean API

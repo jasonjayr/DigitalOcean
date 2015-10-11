@@ -1,4 +1,5 @@
 package DigitalOcean::Types;
+
 use Mouse::Util::TypeConstraints;
 use DigitalOcean::Region;
 use DigitalOcean::Image;

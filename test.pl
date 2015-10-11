@@ -3,53 +3,50 @@ use strict;
 use lib './lib';
 
 use DigitalOcean;
+exit;
+
+my $tokens = do "tokenlist.pl";
+
 
 =head
-my $hash = {
-                                       'features' => [
-                                                       'private_networking',
-                                                       'backups',
-                                                       'ipv6',
-                                                       'metadata'
-                                                     ],
-                                       'slug' => 'sfo1',
-                                       'name' => 'San Francisco 1',
-                                       'sizes' => [
-                                                    '32gb',
-                                                    '16gb',
-                                                    '2gb',
-                                                    '1gb',
-                                                    '4gb',
-                                                    '8gb',
-                                                    '512mb',
-                                                    '64gb',
-                                                    '48gb'
-                                                  ],
-                                       'available' => bless( do{\(my $o = 1)}, 'JSON::PP::Boolean' ),
-                                     }; 
-#my $reg = DigitalOcean::Region->new($hash);
-
-#print $reg->slug . "\n";
-
-my $net = DigitalOcean::Networks->new(v4 => [{
-                                                                 'gateway' => '198.199.108.1',
-                                                                                                                  'type' => 'public',
-                                                                                                                                                                   'netmask' => '255.255.255.0',
-                                                                                                                                                                                                                    'ip_address' => '198.199.108.65'
-                                                                                                                                                                                                                                                                   }]);
-
-                                                                                                                                                                                                                                        
-
-print $net->v4->[0]->gateway;
-
-
-exit;
+	my $hash = {
+	       'features' => [
+			       'private_networking',
+			       'backups',
+			       'ipv6',
+			       'metadata'
+			     ],
+	       'slug' => 'sfo1',
+	       'name' => 'San Francisco 1',
+	       'sizes' => [
+			    '32gb',
+			    '16gb',
+			    '2gb',
+			    '1gb',
+			    '4gb',
+			    '8gb',
+			    '512mb',
+			    '64gb',
+			    '48gb'
+			  ],
+	       'available' => bless( do{\(my $o = 1)}, 'JSON::PP::Boolean' ),
+	}; 
+	#my $reg = DigitalOcean::Region->new($hash);
+	#print $reg->slug . "\n";
+	
+	my $net = DigitalOcean::Networks->new(v4 => [{
+		'gateway' => '198.199.108.1',
+		'type' => 'public',
+		'netmask' => '255.255.255.0',
+		'ip_address' => '198.199.108.65'
+	}]);
+	print $net->v4->[0]->gateway;
+	exit;
 =cut
-my $do = DigitalOcean->new(oauth_token => 'a4a582d91e8585d481f1c4388c73e66a7c299ffbbaeffd85d54cb03db502eb9c');
 
+my $do = DigitalOcean->new(oauth_token => $tokens->{read_write});
 
-
-    $do->per_page(3);
+    #$do->per_page(00);
     #set this collection to have 2 objects returned per page
     my $sizes_collection = $do->sizes;
     my $obj;

@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean;
+
+use strict;
 use Mouse; 
 
 use DigitalOcean::Response;

@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Droplet;
+
+use strict;
 use Mouse;
 use DigitalOcean::Types;
 use DigitalOcean::Snapshot;

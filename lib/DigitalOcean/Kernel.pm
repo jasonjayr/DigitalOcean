@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Kernel;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents a Kernel object in the DigitalOcean API

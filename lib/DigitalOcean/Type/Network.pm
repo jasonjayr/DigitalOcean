@@ -1,4 +1,5 @@
 package DigitalOcean::Type::Network;
+
 use Mouse::Util::TypeConstraints;
 use DigitalOcean::Network;
 

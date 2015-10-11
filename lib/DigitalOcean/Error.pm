@@ -1,5 +1,7 @@
-use strict;
 package DigitalOcean::Error;
+
+use strict;
+
 use Object::Tiny::XS qw /id message status_code status_message status_line DigitalOcean/;
 
 #ABSTRACT: Represents an HTTP error returned by the DigitalOcean API

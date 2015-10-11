@@ -1,5 +1,6 @@
-use strict;
 package DigitalOcean::Account;
+
+use strict;
 use Mouse;
 
 #ABSTRACT: Represents an Account object in the DigitalOcean API
