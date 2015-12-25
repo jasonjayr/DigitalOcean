@@ -96,7 +96,7 @@ The minimum 'disk' required for a size to use this image.
 
 has min_disk_size => ( 
     is => 'ro',
-    isa => 'Num',
+    isa => 'Undef|Num',
 );
 
 =method created_at

@@ -1,7 +1,7 @@
 use strict;
 package DigitalOcean;
 use Mouse; 
-
+use Data::Dump qw(ddx);
 use DigitalOcean::Response;
 use DigitalOcean::Droplet;
 use DigitalOcean::Meta;
@@ -12,6 +12,7 @@ use DigitalOcean::Action;
 use DigitalOcean::Domain;
 use DigitalOcean::Droplet::Upgrade;
 use DigitalOcean::SSH::Key;
+use Log::Any qw($log);
 
 #for requesting
 use LWP::UserAgent;
@@ -25,6 +26,8 @@ use Data::Dumper qw//;
 
 #DigitalOcean packages
 use DigitalOcean::Error;
+
+our $_DEV_DEBUG = 0;
 
 #ABSTRACT: An OO interface to the Digital Ocean API (v2).
 
@@ -273,7 +276,7 @@ sub _request {
     }
 
     $uri->query_form($params);
-    print "REQUESTING " . $uri->as_string . "\n";
+    $_DEV_DEBUG  && $log->debugf("REQUESTING %s",$uri->as_string);
 
     my $req = HTTP::Request->new(
         $req_method,
@@ -298,7 +301,7 @@ sub _request {
         my $req_body = $json_coder->encode($req_body_hash);
         $req->content($req_body);
 
-        print "REQ BODY $req_body\n";
+        $_DEV_DEBUG && $log->debugf("REQ BODY %s", $req_body);
     }
 
     my $response = $self->ua->request($req);
@@ -309,7 +312,7 @@ sub _request {
         #TEMPORARY
         my $coder = JSON::XS->new->ascii->pretty->allow_nonref;
         my $pretty_printed_unencoded = $coder->encode ($json);
-        print "$pretty_printed_unencoded\n";
+        #print "$pretty_printed_unencoded\n";
 
         #die with DigitalOcean::Error
         if($response->code < 200 or $response->code >= 300) {
@@ -321,7 +324,7 @@ sub _request {
                 status_line => $response->status_line,
             );
 
-            die $self->die_pretty ? Data::Dumper->Dump([$do_error, $self]) : $do_error;
+            die $self->die_pretty ? ddx([$do_error, $self]) : $do_error;
         }
 
     }
@@ -343,7 +346,7 @@ sub _request {
 
             #if actions array is present and we are supposed to wait on events, then wait!
             if($json->{links}->{actions} and ($self->wait_on_actions or $wait_on_action)) { 
-                print "WAITING on ACTION in request\n";
+                $_DEV_DEBUG && $log->debug("WAITING on ACTION in request");
 
                 #wait on each returned action that occurred from the API call
                 for my $act_temp (@{$json->{links}->{actions}}) { 
